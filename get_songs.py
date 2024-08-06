@@ -1,9 +1,9 @@
 import requests
 import dotenv
 import os
-
+import multiprocessing as mp
+from logtime import logtime
 from dotenv import load_dotenv
-# from sample_data_holder import sample_data
 
 load_dotenv()
 
@@ -43,8 +43,8 @@ def get_ids(video_data: list[str]) -> list[str]:
     return ids
 
 
+@logtime
 def get_youtube_links() -> list[str]:
-    # return get_ids(sample_data)
     data = []
     res = make_request()
 
@@ -62,3 +62,15 @@ def get_youtube_links() -> list[str]:
         next_page_token_present = next_page_token is not None
 
     return get_ids(data)
+
+
+@logtime
+def get_new_songs(all_songs, old_songs):
+    new_songs_q = mp.Queue()
+    new_songs_list = []
+    for song in all_songs:
+        if song not in old_songs:
+            new_songs_q.put(song)
+            new_songs_list.append(song)
+
+    return new_songs_q, new_songs_list

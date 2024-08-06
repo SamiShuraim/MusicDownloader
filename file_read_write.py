@@ -1,3 +1,7 @@
+from logtime import logtime
+
+
+@logtime
 def read() -> list[str]:
     try:
         res = []
@@ -10,6 +14,8 @@ def read() -> list[str]:
         open("already_downloaded_songs.txt", "x").close()
         return []
 
+
+@logtime
 def write(new_songs: list[str]) -> None:
     with open("already_downloaded_songs.txt", "a") as f:
         for i in new_songs:
