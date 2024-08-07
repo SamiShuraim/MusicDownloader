@@ -1,9 +1,10 @@
-import requests
-import dotenv
-import os
 import multiprocessing as mp
-from logtime import logtime
+import os
+
+import requests
 from dotenv import load_dotenv
+
+from logtime import logtime
 
 load_dotenv()
 
@@ -45,6 +46,10 @@ def get_ids(video_data: list[str]) -> list[str]:
 
 @logtime
 def get_youtube_links() -> list[str]:
+    """
+    Sends request(s) to YouTube API to get links of all videos in a specific playlist.
+    :return: list[str] where each string represents the id of a video in the playlist
+    """
     data = []
     res = make_request()
 
@@ -65,7 +70,14 @@ def get_youtube_links() -> list[str]:
 
 
 @logtime
-def get_new_songs(all_songs, old_songs):
+def get_new_songs(all_songs: list[str], old_songs: list[str]) -> tuple[mp.Queue, list]:
+    """
+    Finds ids that exist in all_songs and not in old_songs. These ids represent the songs that have not been
+    downloaded before (new).
+    :param all_songs: list[str] where each string is an id of a song in the playlist.
+    :param old_songs: list[str] where each string is an id of a song that has been downloaded before.
+    :return: list[str] where each string is an id of a new song.
+    """
     new_songs_q = mp.Queue()
     new_songs_list = []
     for song in all_songs:

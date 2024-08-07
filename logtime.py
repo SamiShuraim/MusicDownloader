@@ -2,17 +2,14 @@ import time
 from queue import Queue
 
 START = time.perf_counter()
-MESSAGES = [
-    "Fetched YouTube links",
-    "Read previously downloaded songs",
-    "Filtered new songs",
-    "Downloaded all new songs",
-    "Added new songs to previously downloaded songs list",
-    "Moved all new songs to flash drive",
-    "Program is terminating"
-]
-MESSAGES_Q = Queue()
-for i in range(len(MESSAGES)): MESSAGES_Q.put(MESSAGES[i])
+MESSAGES = {
+    "get_youtube_links": "Fetched YouTube links",
+    "read": "Read previously downloaded songs",
+    "get_new_songs": "Filtered new songs",
+    "download_songs": "Downloaded all new songs",
+    "write": "Added new songs to previously downloaded songs list",
+    "main": "Program is terminating"
+}
 
 
 def make_log_message(message: str, end: float = -1) -> str:
@@ -22,9 +19,10 @@ def make_log_message(message: str, end: float = -1) -> str:
 
 def logtime(func):
     def wrapper(*args, **kwargs):
+        func_name = func.__name__
         res = func(*args, **kwargs)
         end = time.perf_counter()
-        message = MESSAGES_Q.get()
+        message = MESSAGES[func_name]
         print(make_log_message(message, end))
         return res
 
