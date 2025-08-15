@@ -9,11 +9,11 @@ A Python script that automates downloading songs from a YouTube playlist directl
 My car's stereo system relies on a USB flash drive for music, as it lacks AUX or Bluetooth capabilities.  
 The manual process of updating my music was incredibly tedious:  
 
-1. Find a song  
-2. Copy its link  
-3. Use a third-party website to download it  
-4. Rename the file  
-5. Transfer it to the flash drive  
+1. **Find a song**
+2. **Copy its link**
+3. **Use a third-party website to download it**
+4. **Rename the file**  
+5. **Transfer it to the flash drive**  
 
 ...and repeat this for every single song.  
 
@@ -54,5 +54,3 @@ This project automates the entire workflow, allowing me to update my car's music
 
 5. **Update Log**  
    Updates `downloaded_songs.txt` with newly added songs to avoid re-downloading them in the future.
-
----
